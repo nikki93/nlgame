@@ -1,0 +1,2 @@
+(defpackage #:nlgame
+  (:use #:cl))

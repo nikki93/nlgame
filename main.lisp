@@ -32,7 +32,7 @@
                ;; Create OpenGL context
                (sdl2:with-gl-context (gl-context *main-window*)
 
-                 ;; Run main event loop
+                 ;; Run main event loop, forwarding events to relevant `main-' functions
                  (main-load)
                  (sdl2:with-event-loop (:method :poll)
                    (:quit ()
@@ -41,7 +41,16 @@
                           (repl-update)
                           (repl-continuable
                             (main-update)
-                            (main-draw))))
+                            (main-draw))
+                          (finish-output))
+                   (:keydown () (format t "keydown~%"))
+                   (:keyup () (format t "keyup~%"))
+                   (:mousebuttondown () (format t "mousebuttondown~%"))
+                   (:mousebuttonup () (format t "mousebuttonup~%"))
+                   (:mousemotion () (format t "mousemotion~%"))
+                   (:mousewheel () (format t "mousewheel~%"))
+                   (:textediting () (format t "textediting~%"))
+                   (:textinput () (format t "textinput~%")))
                  (main-unload)))))))))
 
 
